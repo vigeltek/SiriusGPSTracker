@@ -20,7 +20,7 @@ import static android.location.Criteria.ACCURACY_COARSE;
 public class MyActivity extends ActionBarActivity
     implements LocationListener{
 
-    private TextView latituteField;
+    private TextView latitudeField;
     private TextView longitudeField;
     private LocationManager service;
     private String provider;
@@ -30,7 +30,7 @@ public class MyActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        latituteField = (TextView) findViewById(R.id.TextView02);
+        latitudeField = (TextView) findViewById(R.id.TextView02);
         longitudeField = (TextView) findViewById(R.id.TextView04);
 
         // get the location manager
@@ -54,7 +54,7 @@ public class MyActivity extends ActionBarActivity
             System.out.println("Provider " + provider + " has been selected.");
             onLocationChanged(location);
         } else {
-            latituteField.setText("Location not available");
+            latitudeField.setText("Location not available");
             longitudeField.setText("Location not available");
         }
 
@@ -88,10 +88,12 @@ public class MyActivity extends ActionBarActivity
 
     @Override
     public void onLocationChanged(Location location) {
-        int lat = (int) (location.getLatitude());
-        int lng = (int) (location.getLongitude());
-        latituteField.setText(String.valueOf(lat));
+        double lat = location.getLatitude();
+        double lng = location.getLongitude();
+        latitudeField.setText(String.valueOf(lat));
         longitudeField.setText(String.valueOf(lng));
+        Toast.makeText(this, "Location Updated",
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
