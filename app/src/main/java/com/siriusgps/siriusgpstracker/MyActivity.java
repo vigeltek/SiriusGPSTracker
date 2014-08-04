@@ -1,5 +1,6 @@
 package com.siriusgps.siriusgpstracker;
 
+import android.location.LocationProvider;
 import android.provider.Settings;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,7 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import static android.location.Criteria.ACCURACY_COARSE;
+import static android.location.Criteria.ACCURACY_FINE;
 
 
 public class MyActivity extends ActionBarActivity
@@ -44,7 +45,7 @@ public class MyActivity extends ActionBarActivity
         // Define the criteria how to select the locatioin provider -> use
         // default
         Criteria criteria = new Criteria();
-        criteria.setAccuracy(ACCURACY_COARSE);
+        criteria.setAccuracy(ACCURACY_FINE);
 
         provider = service.getBestProvider(criteria,false);
         Location location = service.getLastKnownLocation(provider);
@@ -99,6 +100,19 @@ public class MyActivity extends ActionBarActivity
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub
+        if(status == LocationProvider.OUT_OF_SERVICE) {
+            Toast.makeText(this, "Out Of Service",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else if(status == LocationProvider.TEMPORARILY_UNAVAILABLE)
+        {
+            Toast.makeText(this, "Temporary Unavailable",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Available",
+                Toast.LENGTH_SHORT).show();
+        }
 
     }
 
